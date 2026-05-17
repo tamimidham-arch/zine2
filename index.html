@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZINE CORNER — Ruang Zine Independen</title>
+<style>
+  /* ─── RESET & BASE ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #fafaf8;
+    --off-white: #f4f3ef;
+    --paper: #ede9e1;
+    --ink: #1a1a18;
+    --ink-light: #4a4a46;
+    --ink-faint: #9a9a94;
+    --rule: #d8d4cc;
+    --accent: #c8401a;
+    --accent-soft: #f0e8e3;
+    --tag-bg: #eeecea;
+    --font-body: 'Georgia', 'Times New Roman', serif;
+    --font-ui: 'Helvetica Neue', 'Arial', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  /* ─── HEADER ─── */
+  #site-header {
+    border-bottom: 1px solid var(--rule);
+    background: var(--white);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    max-width: 1060px; margin: 0 auto;
+    gap: 16px;
+  }
+  .site-logo {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+  .site-logo span {
+    color: var(--accent);
+    margin-right: 4px;
+  }
+  .site-tagline {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-family: var(--font-ui);
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  nav {
+    display: flex; gap: 20px; align-items: center;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+  nav a {
+    color: var(--ink-light);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  nav a:hover { color: var(--ink); border-color: var(--ink); }
+  .btn-submit {
+    background: var(--ink);
+    color: var(--white) !important;
+    padding: 6px 14px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: none !important;
+  }
+  .btn-submit:hover { background: var(--accent) !important; }
+
+  /* ─── HERO BANNER ─── */
+  .hero {
+    border-bottom: 1px solid var(--rule);
+    background: var(--off-white);
+    padding: 40px 20px 32px;
+    text-align: center;
+  }
+  .hero-kicker {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: normal;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--ink-light);
+    max-width: 480px;
+    margin: 0 auto 22px;
+    line-height: 1.65;
+  }
+  .hero-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink); color: var(--white);
+    padding: 9px 22px; font-family: var(--font-ui);
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid var(--ink);
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-secondary {
+    background: transparent; color: var(--ink);
+    padding: 9px 22px; font-family: var(--font-ui);
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer;
+    border: 1px solid var(--rule);
+    transition: border-color 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  /* ─── MARQUEE ─── */
+  .marquee-bar {
+    background: var(--ink);
+    color: var(--white);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 28s linear infinite;
+  }
+  .marquee-inner span { margin: 0 32px; opacity: 0.7; }
+  .marquee-inner b { opacity: 1; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── SECTION COMMONS ─── */
+  .section { padding: 28px 0; border-bottom: 1px solid var(--rule); }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 24px; gap: 12px;
+  }
+  .section-title {
+    font-family: var(--font-ui);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block; width: 16px; height: 1px;
+    background: var(--accent);
+  }
+  .section-more {
+    font-family: var(--font-ui);
+    font-size: 11px; letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+    cursor: pointer;
+  }
+  .section-more:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ─── GRID ─── */
+  .zine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 16px 12px;
+  }
+  .zine-grid-wide {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  /* ─── ZINE CARD ─── */
+  .zine-card {
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .zine-card:hover { opacity: 0.8; }
+  .zine-card:hover .card-cover img { transform: scale(1.02); }
+
+  .card-cover {
+    aspect-ratio: 3/4;
+    background: var(--paper);
+    overflow: hidden;
+    margin-bottom: 7px;
+    position: relative;
+  }
+  .card-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .card-cover .cover-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    flex-direction: column; gap: 6px;
+  }
+  .card-cover .cover-placeholder .cover-initial {
+    font-size: 32px; font-family: var(--font-body);
+    font-style: italic; color: var(--rule);
+  }
+
+  .ai-badge {
+    position: absolute; bottom: 8px; right: 8px;
+    font-family: var(--font-ui); font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 6px;
+    background: rgba(26,26,24,0.82); color: var(--white);
+  }
+  .ai-badge.human { background: rgba(26,26,24,0.6); }
+  .ai-badge.assisted { background: rgba(200,64,26,0.82); }
+  .ai-badge.synthetic { background: rgba(60,60,120,0.82); }
+
+  .card-title {
+    font-size: 12px; font-weight: normal;
+    line-height: 1.35; margin-bottom: 3px;
+  }
+  .card-author {
+    font-family: var(--font-ui); font-size: 10px;
+    color: var(--ink-faint); margin-bottom: 4px;
+  }
+  .card-note {
+    font-size: 11px; color: var(--ink-light);
+    line-height: 1.45; margin-bottom: 6px;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-meta {
+    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  }
+  .tag {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    background: var(--tag-bg); color: var(--ink-light);
+    padding: 2px 7px;
+  }
+  .tag.price { background: var(--accent-soft); color: var(--accent); }
+  .hit-count {
+    font-family: var(--font-ui); font-size: 10px;
+    color: var(--ink-faint); margin-left: auto;
+    display: flex; align-items: center; gap: 3px;
+  }
+
+  /* ─── HIGHLIGHT (first section) ─── */
+  .highlight-card {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px; align-items: start;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .highlight-card:hover { opacity: 0.85; }
+  .highlight-cover {
+    aspect-ratio: 3/4;
+    background: var(--paper); overflow: hidden;
+  }
+  .highlight-cover img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .highlight-card:hover .highlight-cover img { transform: scale(1.02); }
+  .highlight-cover-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-style: italic;
+    font-size: 28px; color: var(--rule);
+  }
+  .highlight-body { padding-top: 4px; }
+  .highlight-kicker {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .highlight-title {
+    font-size: clamp(16px, 2.2vw, 22px);
+    font-weight: normal; line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .highlight-author {
+    font-family: var(--font-ui); font-size: 11px;
+    color: var(--ink-faint); margin-bottom: 10px;
+  }
+  .highlight-note {
+    font-size: 12px; color: var(--ink-light);
+    line-height: 1.6; margin-bottom: 14px;
+    border-left: 2px solid var(--rule);
+    padding-left: 10px;
+  }
+  .highlight-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+  .highlight-cta {
+    font-family: var(--font-ui); font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink); border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px; display: inline-block;
+    transition: color 0.15s;
+  }
+  .highlight-cta:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ─── GENRE TABS ─── */
+  .genre-tabs {
+    display: flex; gap: 0; flex-wrap: wrap;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+  .genre-tab {
+    font-family: var(--font-ui); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 9px 16px; cursor: pointer;
+    color: var(--ink-faint);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+    background: none; border-top: none; border-left: none; border-right: none;
+  }
+  .genre-tab:hover { color: var(--ink); }
+  .genre-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,26,24,0.65);
+    align-items: flex-start; justify-content: center;
+    padding: 24px 16px; overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white);
+    max-width: 680px; width: 100%;
+    margin: auto;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none;
+    font-family: var(--font-ui); font-size: 20px;
+    color: var(--ink-faint); cursor: pointer; z-index: 1;
+    line-height: 1;
+    transition: color 0.1s;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-cover {
+    aspect-ratio: 3/2;
+    background: var(--paper); overflow: hidden;
+  }
+  .modal-cover img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-cover-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-body); font-style: italic;
+    font-size: 64px; color: var(--rule);
+  }
+  .modal-body { padding: 28px 28px 32px; }
+  .modal-kicker {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
+  }
+  .modal-title {
+    font-size: 26px; font-weight: normal;
+    line-height: 1.2; margin-bottom: 8px;
+  }
+  .modal-author {
+    font-family: var(--font-ui); font-size: 12px;
+    color: var(--ink-faint); margin-bottom: 20px;
+  }
+  .modal-note {
+    font-size: 14px; color: var(--ink-light);
+    line-height: 1.75; margin-bottom: 24px;
+    border-left: 2px solid var(--paper);
+    padding: 12px 16px;
+    background: var(--off-white);
+  }
+  .modal-note-label {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 8px;
+    display: block;
+  }
+  .modal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .modal-stats {
+    font-family: var(--font-ui); font-size: 11px;
+    color: var(--ink-faint); margin-bottom: 24px;
+    display: flex; gap: 20px; flex-wrap: wrap;
+  }
+  .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+  .modal-btn {
+    font-family: var(--font-ui); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 9px 20px; cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--rule);
+    background: transparent; color: var(--ink);
+  }
+  .modal-btn:hover { border-color: var(--ink); }
+  .modal-btn.primary {
+    background: var(--ink); color: var(--white);
+    border-color: var(--ink);
+  }
+  .modal-btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+  .modal-btn.support { border-color: var(--accent); color: var(--accent); }
+  .modal-btn.support:hover { background: var(--accent); color: var(--white); }
+
+  .payment-info {
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+  }
+  .payment-label {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 12px;
+    display: block;
+  }
+  .payment-methods {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .payment-method {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 5px 10px; border: 1px solid var(--rule);
+    color: var(--ink-light);
+  }
+  .payment-note {
+    font-size: 12px; color: var(--ink-faint);
+    margin-top: 10px; line-height: 1.5;
+    font-style: italic;
+  }
+
+  .reader-location {
+    font-family: var(--font-ui); font-size: 11px;
+    color: var(--ink-faint); font-style: italic;
+    margin-top: 4px;
+  }
+
+  .stats-bar {
+    background: var(--off-white);
+    border-bottom: 1px solid var(--rule);
+    padding: 10px 0;
+  }
+  .stats-inner {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: var(--font-ui); font-size: 11px;
+    color: var(--ink-faint); letter-spacing: 0.04em;
+  }
+  .stats-inner b { color: var(--ink); font-weight: 600; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 40px 0 32px;
+    background: var(--white);
+  }
+  .footer-inner {
+    max-width: 1060px; margin: 0 auto; padding: 0 20px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+  }
+  .footer-col-title {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 14px;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a {
+    font-family: var(--font-ui); font-size: 12px;
+    color: var(--ink-light);
+    border-bottom: 1px solid transparent;
+    display: inline-block;
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .footer-links a:hover { color: var(--ink); border-color: var(--rule); }
+  .footer-about {
+    font-size: 13px; color: var(--ink-faint);
+    line-height: 1.65;
+  }
+  .footer-bottom {
+    max-width: 1060px; margin: 28px auto 0;
+    padding: 16px 20px 0;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-ui); font-size: 11px;
+    color: var(--ink-faint); letter-spacing: 0.04em;
+    display: flex; justify-content: space-between; flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .notice-banner {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 12px 20px;
+    margin-bottom: 28px;
+    font-size: 13px; color: var(--ink-light);
+    line-height: 1.55;
+  }
+  .notice-banner strong { color: var(--accent); }
+
+  .loading-state {
+    text-align: center; padding: 40px 0;
+    font-family: var(--font-ui); font-size: 12px;
+    letter-spacing: 0.08em; color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .loading-state::after {
+    content: ''; display: block; width: 24px; height: 1px;
+    background: var(--rule); margin: 12px auto 0;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  @media (max-width: 680px) {
+    .header-inner { flex-wrap: wrap; gap: 10px; }
+    .site-tagline { display: none; }
+    nav { gap: 12px; }
+    .hero { padding: 28px 16px 24px; }
+    .highlight-card { grid-template-columns: 1fr; }
+    .highlight-cover { aspect-ratio: 3/2; }
+    .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; }
+    .zine-grid { grid-template-columns: repeat(3, 1fr); gap: 12px 8px; }
+    .modal-body { padding: 20px 16px 24px; }
+  }
+  @media (max-width: 400px) {
+    .zine-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .admin-trigger-area {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 998;
+  }
+  .admin-panel {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 300px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  .admin-panel.open {
+    display: block;
+  }
+  .admin-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--off-white);
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .admin-header button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--ink-faint);
+  }
+  .admin-body {
+    padding: 12px 0;
+  }
+  .admin-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.1s;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .admin-item:last-child {
+    border-bottom: none;
+  }
+  .admin-item:hover {
+    background: var(--off-white);
+  }
+  .admin-item-icon {
+    font-size: 18px;
+  }
+  .admin-item.danger {
+    color: var(--accent);
+  }
+  .toast-message {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--white);
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .toast-message.show {
+    opacity: 1;
+  }
+
+  #main-content { display: block; }
+  #contact-page { display: none; padding: 52px 0; }
+  #contact-page.active { display: block; }
+  #about-page { display: none; padding: 52px 0; }
+  #about-page.active { display: block; }
+
+  .page-title {
+    font-size: 24px; font-weight: normal;
+    margin-bottom: 28px;
+  }
+  .prose { font-size: 14px; color: var(--ink-light); line-height: 1.8; max-width: 560px; }
+  .prose p { margin-bottom: 16px; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  .contact-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px; margin-top: 28px;
+  }
+  .contact-item {
+    border: 1px solid var(--rule);
+    padding: 18px 16px;
+    transition: border-color 0.15s;
+  }
+  .contact-item:hover { border-color: var(--ink); }
+  .contact-item a { display: block; }
+  .contact-platform {
+    font-family: var(--font-ui); font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 6px;
+  }
+  .contact-handle {
+    font-size: 14px; color: var(--ink);
+  }
+
+  #scroll-top {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 38px; height: 38px;
+    background: var(--ink); color: var(--white);
+    border: none; cursor: pointer;
+    font-size: 16px; z-index: 150;
+    display: none; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  #scroll-top.visible { display: flex; }
+  #scroll-top:hover { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="header-inner">
+    <div class="site-logo" onclick="showPage('main')" style="cursor:pointer">
+      <span>✦</span>ZINE CORNER
+    </div>
+    <div class="site-tagline">Ruang Zine Independen Indonesia</div>
+    <nav>
+      <a href="#" onclick="showPage('main'); return false;">Katalog</a>
+      <a href="#" onclick="showPage('about'); return false;">Tentang</a>
+      <a href="#" onclick="showPage('contact'); return false;">Kontak</a>
+      <a href="#" class="btn-submit" onclick="openSubmitForm(); return false;">+ Kirim Zine</a>
+    </nav>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner" id="stats-bar">
+      <span>Memuat data…</span>
+    </div>
+  </div>
+</div>
+
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-inner" id="marquee-inner"></div>
+</div>
+
+<div id="main-content">
+  <section class="hero">
+    <p class="hero-kicker">Ruang Budaya Digital Kecil</p>
+    <h1>Tempat zine <em>hidup</em>,<br>bukan sekadar dijual.</h1>
+    <p class="hero-sub">ZINE CORNER menerima karya tulisan tangan, zine emosional, AI-assisted writing, experimental writing, dan ekspresi personal. Autentisitas lebih penting dari kesempurnaan.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openSubmitForm()">Kirimkan Zinemu</button>
+      <button class="btn-secondary" onclick="document.getElementById('genre-section').scrollIntoView({behavior:'smooth'})">Jelajahi Genre</button>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="notice-banner" style="margin-top:32px">
+      <strong>Transparansi AI diperbolehkan.</strong> Kami percaya kejujuran adalah bagian dari identitas karya. Setiap zine menampilkan status penulisannya — Human Written, AI Assisted, atau Experimental Synthetic.
+    </div>
+
+    <section class="section" id="highlight-section">
+      <div class="section-header">
+        <h2 class="section-title">Zine Highlight</h2>
+        <span class="section-more" onclick="scrollToAll()">Lihat semua →</span>
+      </div>
+      <div id="highlight-container"><div class="loading-state">Memuat highlight</div></div>
+    </section>
+
+    <section class="section" id="genre-section">
+      <div class="section-header">
+        <h2 class="section-title">Berdasarkan Genre</h2>
+      </div>
+      <div class="genre-tabs" id="genre-tabs"></div>
+      <div class="zine-grid zine-grid-wide" id="genre-grid"><div class="loading-state">Memuat koleksi</div></div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Pilihan Editor</h2>
+      </div>
+      <div class="zine-grid" id="editor-grid"><div class="loading-state">Memuat pilihan editor</div></div>
+    </section>
+
+    <section class="section">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+        <div>
+          <div class="section-header">
+            <h2 class="section-title">Paling Banyak Dilihat</h2>
+          </div>
+          <div id="popular-grid" class="zine-grid" style="grid-template-columns:1fr"><div class="loading-state">Memuat data</div></div>
+        </div>
+        <div>
+          <div class="section-header">
+            <h2 class="section-title">Zine Paling Laris</h2>
+          </div>
+          <div id="bestseller-grid" class="zine-grid" style="grid-template-columns:1fr"><div class="loading-state">Memuat data</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="terbaru-section">
+      <div class="section-header">
+        <h2 class="section-title">Zine Terbaru</h2>
+      </div>
+      <div class="zine-grid zine-grid-wide" id="new-grid"><div class="loading-state">Memuat zine terbaru</div></div>
+    </section>
+  </div>
+</div>
+
+<div id="about-page">
+  <div class="container">
+    <h2 class="page-title">Tentang ZINE CORNER</h2>
+    <div class="prose">
+      <p>ZINE CORNER adalah ruang digital sederhana untuk publikasi zine independen — tulisan emosional, creator note, dan ekspresi personal yang tidak menemukan tempat di platform mainstream.</p>
+      <p>Kami percaya autentisitas lebih penting dari kesempurnaan. Tulisan tangan, coretan, tangisan di atas kertas — semua memiliki tempat di sini.</p>
+      <p>Transparansi penggunaan AI adalah bagian dari identitas karya. Kami tidak menghakimi, kami hanya meminta kejujuran.</p>
+      <p>Kurasi dilakukan bukan untuk menyaring kualitas, tetapi untuk menjaga ruang ini dari spam dan kekacauan tanpa arah — agar setiap zine yang masuk betul-betul berasal dari niat.</p>
+      <p style="border-top:1px solid var(--rule); padding-top:16px; color:var(--ink-faint); font-size:13px; font-style:italic;">"Bukan marketplace. Bukan galeri elit. Hanya perpustakaan komunitas yang kecil dan jujur."</p>
+    </div>
+  </div>
+</div>
+
+<div id="contact-page">
+  <div class="container">
+    <h2 class="page-title">Kontak & Temukan Kami</h2>
+    <div class="prose">
+      <p>Untuk pengiriman zine, kolaborasi, pertanyaan kurasi, atau sekadar menyapa — kami ada di sini.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-item"><a href="https://instagram.com/zinecorner" target="_blank"><div class="contact-platform">Instagram</div><div class="contact-handle">@zinecorner</div></a></div>
+      <div class="contact-item"><a href="https://tokopedia.com/zinecorner" target="_blank"><div class="contact-platform">Tokopedia</div><div class="contact-handle">tokopedia.com/zinecorner</div></a></div>
+      <div class="contact-item"><a href="https://shopee.co.id/zinecorner" target="_blank"><div class="contact-platform">Shopee</div><div class="contact-handle">shopee.co.id/zinecorner</div></a></div>
+      <div class="contact-item"><a href="mailto:hello@zinecorner.id"><div class="contact-platform">Email</div><div class="contact-handle">hello@zinecorner.id</div></a></div>
+    </div>
+    <div style="margin-top:36px; border-top:1px solid var(--rule); padding-top:24px;">
+      <div style="font-family:var(--font-ui); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:12px;">Kirim Zine</div>
+      <p style="font-size:13px; color:var(--ink-light); line-height:1.65; margin-bottom:16px;">Gunakan Google Form di bawah untuk mengirimkan zine kamu. Semua karya melalui kurasi singkat sebelum ditampilkan.</p>
+      <button class="btn-primary" onclick="openSubmitForm()">Buka Form Pengiriman</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-col-title">ZINE CORNER</div><div class="footer-about">Ruang digital kecil untuk zine independen Indonesia. Bukan marketplace. Bukan galeri. Hanya perpustakaan komunitas yang jujur.</div></div>
+    <div>
+      <div class="footer-col-title">Temukan Kami</div>
+      <div class="footer-links">
+        <a href="#" id="footer-ig">Instagram</a>
+        <a href="#" id="footer-tokped">Tokopedia</a>
+        <a href="#" id="footer-shopee">Shopee</a>
+        <a href="#" id="footer-email">Email</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigasi</div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('main'); return false;">Katalog Zine</a>
+        <a href="#" onclick="openSubmitForm(); return false;">Kirim Zine</a>
+        <a href="#" onclick="showPage('about'); return false;">Tentang Kami</a>
+        <a href="#" onclick="showPage('contact'); return false;">Kontak</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 ZINE CORNER — Ruang Zine Independen</span>
+    <span>Dibuat dengan niat, bukan algoritma.</span>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Tutup">✕</button>
+    <div class="modal-cover" id="modal-cover"></div>
+    <div class="modal-body">
+      <div class="modal-kicker" id="modal-kicker"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-author" id="modal-author"></div>
+      <div class="modal-note" id="modal-note"></div>
+      <div class="modal-tags" id="modal-tags"></div>
+      <div class="modal-stats" id="modal-stats"></div>
+      <div class="modal-actions" id="modal-actions"></div>
+      <div class="payment-info" id="payment-info" style="display:none">
+        <span class="payment-label">Cara mendukung kreator</span>
+        <div class="payment-methods"><div class="payment-method">QRIS</div><div class="payment-method">GoPay</div><div class="payment-method">OVO</div><div class="payment-method">Dana</div><div class="payment-method">LinkAja</div></div>
+        <div class="payment-note">Setelah pembayaran, hubungi kreator melalui DM Instagram atau email untuk konfirmasi dan mendapatkan akses file.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="admin-trigger-area" id="adminTriggerArea"></div>
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header"><span>⚙️ ADMIN PANEL</span><button onclick="closeAdminPanel()">✕</button></div>
+  <div class="admin-body">
+    <div class="admin-item" onclick="exportData()"><span class="admin-item-icon">📥</span><span>Export Data Zine (JSON)</span></div>
+    <div class="admin-item" onclick="importData()"><span class="admin-item-icon">📤</span><span>Import Data Zine</span></div>
+    <div class="admin-item" onclick="resetToDemo()"><span class="admin-item-icon">🔄</span><span>Reset ke Data Demo</span></div>
+    <div class="admin-item" onclick="clearAllViews()"><span class="admin-item-icon">👁️</span><span>Reset Semua View Counter</span></div>
+    <div class="admin-item danger" onclick="confirmResetAll()"><span class="admin-item-icon">⚠️</span><span>Hapus Semua Data Zine</span></div>
+    <div class="admin-item" onclick="showConfigInfo()"><span class="admin-item-icon">🔧</span><span>Info Konfigurasi</span></div>
+  </div>
+</div>
+
+<div class="toast-message" id="toastMessage"></div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Kembali ke atas">↑</button>
+
+<script>
+/* ================================================================
+   KONFIGURASI - GANTI DENGAN MILIK ANDA
+   ================================================================ */
+const CONFIG = {
+  sheetExecUrl: 'https://script.google.com/macros/s/AKfycbw6TiwzYuonD69Xbcpd6ezBjK5H0o2mQ7kTtwGVybnUGYZqbdTKNqaJewhDc5BpCp1t/exec',
+  formUrl: 'https://forms.gle/CUfNcnKt4uEocHZm9',
+  igUrl: 'https://instagram.com/zinecorner',
+  tokped: 'https://tokopedia.com/zinecorner',
+  shopee: 'https://shopee.co.id/zinecorner',
+  emailUrl: 'mailto:hello@zinecorner.id',
+};
+
+/* ─── DEMO DATA ─── */
+const DEMO_DATA = [
+  { id:'1', judul:'Catatan dari Subuh', penulis:'Nara Wulandari', creator_note:'Ditulis di antara 3 pagi dan adzan subuh.', genre:'Emotional', ai_status:'Human Written', harga:'15000', link_baca:'', cover_url:'', file_url:'', highlight:'ya', editor_pick:'ya', terjual:'12', views:'148', tanggal:'2025-05-01' },
+  { id:'2', judul:'Manual Kerusakan #3', penulis:'Dito Arief', creator_note:'Koleksi ketiga dari seri panduan hal-hal yang tidak bisa diperbaiki.', genre:'Raw / Chaos', ai_status:'Human Written', harga:'20000', link_baca:'https://example.com', cover_url:'', file_url:'', highlight:'', editor_pick:'ya', terjual:'7', views:'93', tanggal:'2025-04-28' },
+  { id:'3', judul:'Surat untuk Diri yang Lebih Tua', penulis:'Kiara Salsabila', creator_note:'Saya menulis ini bersama AI, tapi emosinya sepenuhnya milik saya.', genre:'Philosophy', ai_status:'AI Assisted', harga:'0', link_baca:'https://example.com', cover_url:'', file_url:'', highlight:'', editor_pick:'', terjual:'0', views:'62', tanggal:'2025-04-20' },
+  { id:'4', judul:'Peta Kota yang Tidak Ada', penulis:'Rizal Mubaraq', creator_note:'Eksperimen tipografi dan kartografi imajiner.', genre:'Visual Zine', ai_status:'Experimental Synthetic', harga:'25000', link_baca:'', cover_url:'', file_url:'', highlight:'', editor_pick:'ya', terjual:'4', views:'77', tanggal:'2025-04-15' },
+  { id:'5', judul:'Orang-Orang di Kereta Malam', penulis:'Sekar Ayu', creator_note:'Potret singkat penumpang yang tidak saling kenal.', genre:'Local Voices', ai_status:'Human Written', harga:'12000', link_baca:'', cover_url:'', file_url:'', highlight:'', editor_pick:'', terjual:'9', views:'115', tanggal:'2025-04-10' },
+  { id:'6', judul:'Meditasi Gagal', penulis:'Faza Ibrahim', creator_note:'Kumpulan pikiran selama sesi meditasi yang terus teralihkan.', genre:'Experimental', ai_status:'AI Assisted', harga:'0', link_baca:'https://example.com', cover_url:'', file_url:'', highlight:'', editor_pick:'', terjual:'0', views:'44', tanggal:'2025-04-05' },
+  { id:'7', judul:'Suara Kampung Halaman', penulis:'Aldi Pratama', creator_note:'Rekaman tertulis dari percakapan yang tidak pernah terjadi.', genre:'Local Voices', ai_status:'Human Written', harga:'18000', link_baca:'', cover_url:'', file_url:'', highlight:'', editor_pick:'', terjual:'6', views:'88', tanggal:'2025-03-28' },
+  { id:'8', judul:'Sistem Error', penulis:'Maya Puspita', creator_note:'Kode yang rusak, pikiran yang rusak.', genre:'Experimental', ai_status:'Experimental Synthetic', harga:'10000', link_baca:'https://example.com', cover_url:'', file_url:'', highlight:'', editor_pick:'', terjual:'3', views:'56', tanggal:'2025-03-20' },
+];
+
+const GENRES = ['Semua', 'Emotional', 'Experimental', 'Local Voices', 'Philosophy', 'Visual Zine', 'Raw / Chaos', 'AI Assisted'];
+let activeGenre = 'Semua';
+let allZines = [];
+
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toastMessage');
+  toast.textContent = msg;
+  toast.style.background = isError ? 'var(--accent)' : 'var(--ink)';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function updateFooterLinks() {
+  const ig = document.getElementById('footer-ig');
+  const tp = document.getElementById('footer-tokped');
+  const sh = document.getElementById('footer-shopee');
+  const em = document.getElementById('footer-email');
+  if (ig) ig.href = CONFIG.igUrl;
+  if (tp) tp.href = CONFIG.tokped;
+  if (sh) sh.href = CONFIG.shopee;
+  if (em) em.href = CONFIG.emailUrl;
+}
+
+function getViews(id) {
+  const stored = localStorage.getItem('zc_views_' + id);
+  return stored ? parseInt(stored) : 0;
+}
+function addView(id, baseViews) {
+  const extra = getViews(id);
+  localStorage.setItem('zc_views_' + id, extra + 1);
+  return parseInt(baseViews || 0) + extra + 1;
+}
+function getTotalViews(id, baseViews) {
+  return parseInt(baseViews || 0) + getViews(id);
+}
+function clearAllViews() {
+  for (let i = 0; i < allZines.length; i++) {
+    localStorage.removeItem('zc_views_' + allZines[i].id);
+  }
+  showToast('Semua view counter telah direset');
+  renderSections();
+}
+
+async function fetchSheetData() {
+  const url = CONFIG.sheetExecUrl;
+  if (!url || url === 'https://script.google.com/macros/s/AKfycbw6TiwzYuonD69Xbcpd6ezBjK5H0o2mQ7kTtwGVybnUGYZqbdTKNqaJewhDc5BpCp1t/exec') return null;
+  try {
+    console.log('📡 Mengambil data dari:', url);
+    const res = await fetch(url + '?t=' + Date.now());
+    console.log('📡 Response status:', res.status);
+    if (!res.ok) return null;
+    const data = await res.json();
+    console.log('📡 Data dari Web App:', data);
+    if (Array.isArray(data) && data.length > 0) {
+      if (data[0] && data[0].error) {
+        console.error('❌ Error dari Web App:', data[0].error);
+        return null;
+      }
+      console.log('✅ Berhasil mengambil', data.length, 'data dari Sheets');
+      return data;
+    }
+    return null;
+  } catch(e) {
+    console.error('❌ Fetch error:', e);
+    return null;
+  }
+}
+
+async function getLocation() {
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    const d = await res.json();
+    return d.city || d.region || 'Indonesia';
+  } catch(e) { return 'Indonesia'; }
+}
+
+function getCoverUrl(z) {
+  if (z.cover_url && z.cover_url.startsWith('http')) {
+    const match = z.cover_url.match(/\/d\/(.*?)\//);
+    if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+    return z.cover_url;
+  }
+  return '';
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
+function renderCover(z, className = 'card-cover') {
+  const url = getCoverUrl(z);
+  const initial = z.judul ? z.judul[0].toUpperCase() : '?';
+  const aiBadgeClass = z.ai_status === 'AI Assisted' ? 'assisted' : z.ai_status === 'Experimental Synthetic' ? 'synthetic' : 'human';
+  const aiBadgeLabel = z.ai_status === 'Human Written' ? 'Human' : z.ai_status === 'AI Assisted' ? 'AI Assisted' : 'Synthetic';
+  return `<div class="${className}">
+    ${url ? `<img src="${url}" alt="${z.judul}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=cover-placeholder><span class=cover-initial>${initial}</span><span>${z.genre||'Zine'}</span></div><div class=ai-badge ${aiBadgeClass}>${aiBadgeLabel}</div>'">` : `<div class="cover-placeholder"><span class="cover-initial">${initial}</span><span>${z.genre || 'Zine'}</span></div>`}
+    <div class="ai-badge ${aiBadgeClass}">${aiBadgeLabel}</div>
+  </div>`;
+}
+
+function renderCard(z) {
+  const views = getTotalViews(z.id, z.views);
+  const harga = z.harga && z.harga !== '0' ? `Rp ${parseInt(z.harga).toLocaleString('id-ID')}` : 'Gratis';
+  return `<div class="zine-card" onclick="openZine('${z.id}')">
+    ${renderCover(z, 'card-cover')}
+    <div class="card-title">${escapeHtml(z.judul)}</div>
+    <div class="card-author">${escapeHtml(z.penulis)}</div>
+    <div class="card-note">${escapeHtml(z.creator_note || '')}</div>
+    <div class="card-meta">
+      ${z.genre ? `<span class="tag">${escapeHtml(z.genre)}</span>` : ''}
+      <span class="tag price">${harga}</span>
+      <span class="hit-count">👁 ${views}</span>
+    </div>
+  </div>`;
+}
+
+function renderHighlight(z) {
+  const harga = z.harga && z.harga !== '0' ? `Rp ${parseInt(z.harga).toLocaleString('id-ID')}` : 'Gratis';
+  const coverUrl = getCoverUrl(z);
+  const initial = z.judul ? z.judul[0].toUpperCase() : '?';
+  return `<div class="highlight-card" onclick="openZine('${z.id}')">
+    <div class="highlight-cover">
+      ${coverUrl ? `<img src="${coverUrl}" alt="${z.judul}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=highlight-cover-placeholder>${initial}</div>'">` : `<div class="highlight-cover-placeholder">${initial}</div>`}
+    </div>
+    <div class="highlight-body">
+      <div class="highlight-kicker">✦ Editor's Highlight</div>
+      <h3 class="highlight-title">${escapeHtml(z.judul)}</h3>
+      <div class="highlight-author">oleh ${escapeHtml(z.penulis)}</div>
+      <div class="highlight-note">${escapeHtml(z.creator_note || '')}</div>
+      <div class="highlight-tags">
+        ${z.genre ? `<span class="tag">${escapeHtml(z.genre)}</span>` : ''}
+        <span class="tag">${escapeHtml(z.ai_status)}</span>
+        <span class="tag price">${harga}</span>
+      </div>
+      <span class="highlight-cta">Buka zine ini →</span>
+    </div>
+  </div>`;
+}
+
+function openZine(id) {
+  const z = allZines.find(x => x.id == id);
+  if (!z) return;
+  const newViews = addView(id, z.views);
+  const harga = z.harga && z.harga !== '0' ? `Rp ${parseInt(z.harga).toLocaleString('id-ID')}` : 'Gratis';
+  const coverUrl = getCoverUrl(z);
+  const initial = z.judul ? z.judul[0].toUpperCase() : '?';
+  document.getElementById('modal-cover').innerHTML = coverUrl ? `<img src="${coverUrl}" alt="${z.judul}" onerror="this.parentElement.innerHTML='<div class=modal-cover-placeholder>${initial}</div>'">` : `<div class="modal-cover-placeholder">${initial}</div>`;
+  document.getElementById('modal-kicker').textContent = z.genre || 'Zine';
+  document.getElementById('modal-title').textContent = z.judul;
+  document.getElementById('modal-author').textContent = 'oleh ' + z.penulis;
+  document.getElementById('modal-note').innerHTML = `<span class="modal-note-label">Creator Note</span>${escapeHtml(z.creator_note || '—')}`;
+  document.getElementById('modal-tags').innerHTML = `<span class="tag">${escapeHtml(z.genre || 'Zine')}</span><span class="tag">${escapeHtml(z.ai_status)}</span><span class="tag price">${harga}</span>`;
+  document.getElementById('modal-stats').innerHTML = `<span>👁 ${newViews} pembaca</span>${z.terjual ? `<span>📦 ${z.terjual} terjual</span>` : ''}<span class="reader-location" id="modal-location">📍 membaca sekarang…</span>`;
+  let actions = '';
+  if (z.link_baca) actions += `<a href="${z.link_baca}" target="_blank" class="modal-btn primary">Baca Online →</a>`;
+  if (z.harga && z.harga !== '0') actions += `<button class="modal-btn support" onclick="togglePayment()">Dukung Kreator</button>`;
+  actions += `<button class="modal-btn" onclick="closeModal()">Tutup</button>`;
+  document.getElementById('modal-actions').innerHTML = actions;
+  document.getElementById('payment-info').style.display = 'none';
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  getLocation().then(city => { const el = document.getElementById('modal-location'); if (el) el.textContent = '📍 dibaca dari ' + city; });
+}
+
+function togglePayment() {
+  const pi = document.getElementById('payment-info');
+  pi.style.display = pi.style.display === 'none' ? 'block' : 'none';
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+function closeModalOnBg(e) { if (e.target === document.getElementById('modal-overlay')) closeModal(); }
+
+function renderGenreTabs() {
+  const tabs = document.getElementById('genre-tabs');
+  tabs.innerHTML = GENRES.map(g => `<button class="genre-tab ${g === activeGenre ? 'active' : ''}" onclick="selectGenre('${g}')">${g}</button>`).join('');
+}
+function selectGenre(g) { activeGenre = g; renderGenreTabs(); renderGenreGrid(); }
+function renderGenreGrid() {
+  const filtered = activeGenre === 'Semua' ? allZines : allZines.filter(z => activeGenre === 'AI Assisted' ? z.ai_status === 'AI Assisted' || z.ai_status === 'Experimental Synthetic' : z.genre === activeGenre);
+  const grid = document.getElementById('genre-grid');
+  if (!filtered.length) { grid.innerHTML = '<div style="font-family:var(--font-ui);font-size:12px;color:var(--ink-faint);padding:20px 0;grid-column:1/-1">Belum ada zine di genre ini.</div>'; return; }
+  grid.innerHTML = filtered.slice(0, 8).map(renderCard).join('');
+}
+
+function renderSections() {
+  const totalViews = allZines.reduce((s, z) => s + getTotalViews(z.id, z.views), 0);
+  const totalTerjual = allZines.reduce((s, z) => s + parseInt(z.terjual || 0), 0);
+  document.getElementById('stats-bar').innerHTML = `<b>${allZines.length}</b> zine tersedia &nbsp;·&nbsp; <b>${totalViews}</b> total pembaca &nbsp;·&nbsp; <b>${totalTerjual}</b> terjual &nbsp;·&nbsp; Diperbarui setiap kunjungan`;
+  const titles = allZines.map(z => `<b>${escapeHtml(z.judul)}</b><span>oleh ${escapeHtml(z.penulis)}</span>`).join('');
+  document.getElementById('marquee-inner').innerHTML = titles + titles;
+  const highlights = allZines.filter(z => z.highlight === 'ya' || z.highlight === true);
+  const hContainer = document.getElementById('highlight-container');
+  if (highlights.length) hContainer.innerHTML = renderHighlight(highlights[0]);
+  else if (allZines.length) hContainer.innerHTML = renderHighlight(allZines[0]);
+  else hContainer.innerHTML = '<div style="color:var(--ink-faint);font-size:13px;">Belum ada zine highlight.</div>';
+  renderGenreTabs(); renderGenreGrid();
+  const editors = allZines.filter(z => z.editor_pick === 'ya' || z.editor_pick === true);
+  document.getElementById('editor-grid').innerHTML = (editors.length ? editors : allZines.slice(0,4)).slice(0,4).map(renderCard).join('');
+  const byViews = [...allZines].sort((a,b) => getTotalViews(b.id,b.views) - getTotalViews(a.id,a.views));
+  document.getElementById('popular-grid').innerHTML = byViews.slice(0,4).map(renderCard).join('');
+  const bySold = [...allZines].sort((a,b) => parseInt(b.terjual||0) - parseInt(a.terjual||0));
+  document.getElementById('bestseller-grid').innerHTML = bySold.slice(0,4).map(renderCard).join('');
+  const byDate = [...allZines].sort((a,b) => new Date(b.tanggal||0) - new Date(a.tanggal||0));
+  document.getElementById('new-grid').innerHTML = byDate.slice(0,8).map(renderCard).join('');
+}
+
+function showPage(page) {
+  document.getElementById('main-content').style.display = page === 'main' ? 'block' : 'none';
+  document.getElementById('about-page').classList.toggle('active', page === 'about');
+  document.getElementById('contact-page').classList.toggle('active', page === 'contact');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openSubmitForm() {
+  console.log('📋 Membuka form:', CONFIG.formUrl);
+  if (!CONFIG.formUrl || CONFIG.formUrl === 'https://forms.gle/CUfNcnKt4uEocHZm9') {
+    alert('❌ Google Form belum dikonfigurasi.');
+    return;
+  }
+  const win = window.open(CONFIG.formUrl, '_blank');
+  if (!win) {
+    if (confirm('⚠️ Pop-up blocker mungkin aktif. Buka form di halaman ini? (tekan back nanti untuk kembali)')) {
+      window.location.href = CONFIG.formUrl;
+    }
+  }
+}
+
+function scrollToAll() { document.getElementById('terbaru-section').scrollIntoView({ behavior: 'smooth' }); }
+
+let clickCount = 0, clickTimer = null;
+function initAdminTrigger() {
+  const trigger = document.getElementById('adminTriggerArea');
+  trigger.addEventListener('click', () => {
+    clickCount++;
+    if (clickTimer) clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => { clickCount = 0; }, 800);
+    if (clickCount >= 5) { clickCount = 0; toggleAdminPanel(); }
+  });
+}
+function toggleAdminPanel() { document.getElementById('adminPanel').classList.toggle('open'); }
+function closeAdminPanel() { document.getElementById('adminPanel').classList.remove('open'); }
+function exportData() {
+  const dataStr = JSON.stringify(allZines, null, 2);
+  const blob = new Blob([dataStr], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `zinecorner_backup_${new Date().toISOString().slice(0,19)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Data berhasil diexport');
+}
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'application/json';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        if (Array.isArray(imported) && imported.length) {
+          allZines = imported;
+          renderSections();
+          showToast(`Berhasil import ${imported.length} zine`);
+        } else { showToast('Format file tidak valid', true); }
+      } catch(err) { showToast('Gagal membaca file', true); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+function resetToDemo() {
+  if (confirm('Reset ke data demo? Data saat ini akan hilang!')) {
+    allZines = JSON.parse(JSON.stringify(DEMO_DATA));
+    for (let i = 0; i < DEMO_DATA.length; i++) localStorage.removeItem('zc_views_' + DEMO_DATA[i].id);
+    renderSections();
+    showToast('Data telah direset ke demo');
+  }
+}
+function confirmResetAll() {
+  if (confirm('⚠️ PERINGATAN: Ini akan menghapus SEMUA data zine! Lanjutkan?')) {
+    if (confirm('Yakin sekali? Data tidak bisa dikembalikan!')) {
+      allZines = [];
+      renderSections();
+      showToast('Semua data zine telah dihapus');
+    }
+  }
+}
+function showConfigInfo() {
+  alert(`📋 KONFIGURASI ZINE CORNER\n\nSheet URL: ${CONFIG.sheetExecUrl === 'https://script.google.com/macros/s/AKfycbw6TiwzYuonD69Xbcpd6ezBjK5H0o2mQ7kTtwGVybnUGYZqbdTKNqaJewhDc5BpCp1t/exec' ? 'Belum diatur' : 'Sudah diatur'}\nForm URL: ${CONFIG.formUrl === 'https://forms.gle/CUfNcnKt4uEocHZm9' ? 'Belum diatur' : 'Sudah diatur'}\nTotal Zine: ${allZines.length}\n\n💡 Tips:\n- Ganti CONFIG.sheetExecUrl dan CONFIG.formUrl di file HTML\n- Untuk mengakses admin panel, klik 5x di pojok kiri bawah layar`);
+}
+
+window.addEventListener('scroll', () => { document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400); });
+
+async function init() {
+  updateFooterLinks();
+  initAdminTrigger();
+  console.log('🚀 ZINE CORNER Starting...');
+  let data = null;
+  if (CONFIG.sheetExecUrl && !CONFIG.sheetExecUrl.startsWith('GANTI')) {
+    data = await fetchSheetData();
+  }
+  if (data && Array.isArray(data) && data.length > 0) {
+    console.log('✅ Menggunakan data dari Google Sheets:', data.length, 'zine');
+    allZines = data;
+  } else {
+    console.log('⚠️ Gagal mengambil data dari Sheets, menggunakan DEMO_DATA');
+    allZines = JSON.parse(JSON.stringify(DEMO_DATA));
+  }
+  renderSections();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
